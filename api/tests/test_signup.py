@@ -21,4 +21,4 @@ class SignupViewTests(TestCase):
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(Token.objects.count(), 1)
         self.assertTrue(User.objects.filter(username='testuser').exists())
-        print("signup testing pass!!")
+        print("signup unit testing pass!!")
