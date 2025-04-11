@@ -10,6 +10,7 @@ from api.models import Post
 class IntegrationTests(TestCase):
     # register testing
     def test_successful_registration(self):
+        print("Integration testing start!!")
         data = {'username': 'testuser', 'password': 'SecurePass123'}
         signup_response = self.client.post(
             reverse('signup'),
@@ -38,3 +39,4 @@ class IntegrationTests(TestCase):
         self.assertEqual(Post.objects.first().title, post_data['title'])
         print("2 create post testing pass!!")
 
+        print("Integration testing end!!")

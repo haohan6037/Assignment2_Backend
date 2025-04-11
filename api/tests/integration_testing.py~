@@ -24,7 +24,6 @@ class IntegrationTests(TestCase):
 
         # get token
         self.token=token
-        # self.client.credentials(HTTP_AUTHORIZATION=f'Token {token}')
 
         # create post
         post_data = {
