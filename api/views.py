@@ -6,6 +6,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from rest_framework.permissions import AllowAny
 
 from api.models import Post
 from api.serializers import PostSerializer
@@ -34,5 +35,11 @@ class CreatePostView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         # add log
-        print(f"[CreatePost] user={self.request.user} is creating post")
+        print(f"[CreatePost] user={self.request.user} is creating post title={serializer.validated_data['title']}")
         serializer.save(author=self.request.user)
+
+# Get a single post by ID
+class PostDetailView(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [AllowAny]
