@@ -43,10 +43,14 @@ class IntegrationTests(TestCase):
 
         # get post detail
         print("3 get post detail testing start!!")
-        response = self.client.get(f'/api/posts/{id}/', format='json', HTTP_AUTHORIZATION='Token ' + self.token)
+        response = self.client.get(f'/api/posts/{id}/', format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['title'], post_data['title'])
         print("this post's title is "+response.json()['title'])
         print("3 get post detail testing pass!!")
 
+        print("4 get post list testing start!!")
+        response = self.client.get(f'/api/posts/', format='json')
+        self.assertEqual(response.status_code, 200)
+        print("4 get post list testing pass!!")
         print("Integration testing end!!")
