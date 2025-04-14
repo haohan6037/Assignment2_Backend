@@ -53,4 +53,17 @@ class IntegrationTests(TestCase):
         response = self.client.get(f'/api/posts/', format='json')
         self.assertEqual(response.status_code, 200)
         print("4 get post list testing pass!!")
+
+        print("5 user login testing start!!")
+        login_data = {'username': 'testuser', 'password': 'SecurePass123'}
+        login_response = self.client.post(
+            reverse('login'),
+            data=json.dumps(login_data),
+            content_type='application/json'
+        )
+
+        self.assertEqual(login_response.status_code, 201)
+        token = login_response.json().get('token')
+        self.assertIsNotNone(token)
+        print("5 user login list testing pass!!")
         print("Integration testing end!!")
