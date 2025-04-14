@@ -36,9 +36,6 @@ class CreatePostView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     print("CreatePostView permission_classes:", permissions.IsAuthenticated)
     def perform_create(self, serializer):
-        # add log
-        print(f"[CreatePost] user={self.request.user} is creating post title={serializer.validated_data['title']}")
-        print("[DEBUG] request.data:", self.request.data)
         serializer.save(author=self.request.user)
 
 
