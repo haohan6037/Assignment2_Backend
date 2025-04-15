@@ -1,4 +1,4 @@
-- [ ] Functionality check(for example - [ ] Register API endpoint implemented)
+- [ ] Functionality check(For example - [ ] Register API endpoint implemented)
 - [ ] Postman tested with valid/invalid input
 - [ ] Unit tests written
 - [ ] Integration tested (e.g. login after register)
