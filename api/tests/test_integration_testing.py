@@ -64,6 +64,17 @@ class IntegrationTests(TestCase):
 
         self.assertEqual(login_response.status_code, 201)
         token = login_response.json().get('token')
+        print("token is "+token)
         self.assertIsNotNone(token)
         print("5 user login list testing pass!!")
+
+        print("6 user logout testing start!!")
+        logout_response = self.client.post(
+            reverse('logout'),
+            HTTP_AUTHORIZATION=f'Token {self.token}'
+        )
+        self.assertEqual(logout_response.status_code, 200)
+
+        print("6 user logout testing pass!!")
+
         print("Integration testing end!!")
