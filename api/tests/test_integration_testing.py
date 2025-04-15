@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.authtoken.models import Token
-
+from rest_framework import status
 from api.models import Post
 
 
@@ -53,6 +53,12 @@ class IntegrationTests(TestCase):
         response = self.client.get(f'/api/posts/', format='json')
         self.assertEqual(response.status_code, 200)
         print("4 get post list testing pass!!")
+
+        # delete post
+        print("7 delete post  testing start!!")
+        response = self.client.delete(f'/api/posts/{id}/delete/', format='json', HTTP_AUTHORIZATION='Token ' + self.token)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        print("7 delete post testing pass!!")
 
         print("5 user login testing start!!")
         login_data = {'username': 'testuser', 'password': 'SecurePass123'}
