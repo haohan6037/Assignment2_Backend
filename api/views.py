@@ -45,7 +45,7 @@ def login(request):
                 token = Token.objects.get(user=user)
             except Token.DoesNotExist:
                 token = Token.objects.create(user=user)
-            return JsonResponse({'token': token.key}, status=201)
+            return JsonResponse({'token': token.key, 'username': user.username, 'id': user.id}, status=201)
 
 
 @csrf_exempt
