@@ -18,3 +18,15 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')  # 限制每个用户只能对一个帖子点赞一次
+
+    def __str__(self):
+        return f"{self.user.username} liked {self.post.title}"
