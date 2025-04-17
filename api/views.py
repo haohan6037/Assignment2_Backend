@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.parsers import JSONParser
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
@@ -9,8 +9,8 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-
-from api.models import Post
+from rest_framework.views import APIView
+from api.models import Post, Like
 from api.serializers import PostSerializer
 
 
@@ -106,3 +106,28 @@ class DeletePostView(generics.DestroyAPIView):
     def delete(self, request, *args, **kwargs):
         print("DeletePostView: user=", request.user)
         return self.destroy(request, *args, **kwargs)
+
+
+class LikeView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
+
+        if not created:
+            like.delete()
+            liked = False
+        else:
+            liked = True
+
+        like_count = post.likes.count()
+
+        return Response({
+            'liked': liked,
+            'like_count': like_count
+        }, status=status.HTTP_200_OK)
