@@ -1,0 +1,27 @@
+version: 2.1
+orbs:
+  python: circleci/python@2
+jobs:
+  test-python:
+    docker:
+      - image: cimg/python:3.13
+    steps:
+      - checkout
+      - python/install-packages
+      - run:
+          name: Run tests
+          command: python manage.py test
+  deploy:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run:
+          name: deploy
+          command: '#e.g. ./deploy.sh'
+      - run:
+          name: found github actions config
+          command: ':'
+workflows:
+  build-and-test:
+    jobs:
+      - test-python
