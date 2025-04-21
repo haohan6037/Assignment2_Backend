@@ -25,3 +25,4 @@ workflows:
   build-and-test:
     jobs:
       - test-python
+      - deploy
